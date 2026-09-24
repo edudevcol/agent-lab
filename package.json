@@ -1,0 +1,20 @@
+{
+  "name": "agent-lab",
+  "version": "1.0.0",
+  "description": "Demo visual: varios agentes de QA revisando una página web al mismo tiempo",
+  "author": "edudevcol",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "setup": "npx playwright install chromium",
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "playwright": "^1.56.0"
+  },
+  "license": "MIT"
+}
