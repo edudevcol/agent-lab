@@ -64,7 +64,9 @@
     #al-panel .al-name { flex:1; color:#e8f2ef; font-weight:700; }
     #al-panel .al-status { color:#91aaa4; font-size:10px; white-space:nowrap; }
     #al-panel .al-row.al-active .al-status { color:#78ddb9; }
-    #al-panel .al-rating { display:none; color:#f2b84b; font-size:10px; letter-spacing:1px; white-space:nowrap; }
+    #al-panel .al-rating { display:none; font-size:13px; line-height:1; letter-spacing:2px; white-space:nowrap; }
+    #al-panel .al-rating .al-star-filled { color:#f2b84b; }
+    #al-panel .al-rating .al-star-empty { color:#6b817a; }
     #al-panel.al-done .al-rating { display:inline; }
     #al-panel .al-log { border-top:1px solid #29443f; background:#0d1819; }
     #al-panel .al-log li { display:flex; gap:7px; padding:5px 0; font-size:11px; color:#aac0ba; }
@@ -693,7 +695,14 @@
       for (const review of text) {
         const agent = currentAgents.find((item) => item.id === review.agentId);
         if (!agent) continue;
-        agent.ratingEl.textContent = review.stars || `${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}`;
+        const rating = Math.max(0, Math.min(5, Math.round(Number(review.rating) || 0)));
+        agent.ratingEl.replaceChildren();
+        for (let index = 0; index < 5; index += 1) {
+          const star = document.createElement('span');
+          star.className = index < rating ? 'al-star-filled' : 'al-star-empty';
+          star.textContent = index < rating ? '★' : '☆';
+          agent.ratingEl.appendChild(star);
+        }
         agent.row.title = review.comment;
       }
     }
