@@ -256,6 +256,11 @@ const headers = response ? response.headers() : {};
 
 const browserCode = await readFile(path.join(__dirname, 'browser', 'agent-lab.js'), 'utf8');
 await page.addScriptTag({ content: browserCode });
+const agentFiles = ['accessibility.js', 'security.js', 'links.js', 'seo.js', 'forms.js', 'performance.js'];
+for (const agentFile of agentFiles) {
+  const agentCode = await readFile(path.join(__dirname, 'browser', 'agents', agentFile), 'utf8');
+  await page.addScriptTag({ content: agentCode });
+}
 
 console.log('Agentes trabajando...');
 const report = await page.evaluate((opts) => window.__agentLab.run(opts), { speed, headers });
